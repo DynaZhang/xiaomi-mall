@@ -9,9 +9,11 @@
           <a href="javascript:void(0)">协议规则</a>
         </div>
         <div class="topbar-user">
-          <a href="javascript:void(0)">登录</a>
-          <a href="javascript:void(0)">注册</a>
-          <a href="javascript:void(0)" class="my-cart">
+          <a href="javascript:void(0)" v-if="username">{{username}}</a>
+          <a href="javascript:void(0)" v-if="username">我的订单</a>
+          <a href="javascript:void(0)" v-if="!username" @click="handleGotoLogin">登录</a>
+          <a href="javascript:void(0)" v-if="!username">注册</a>
+          <a href="javascript:void(0)" class="my-cart" @click="handleGotoCart">
             <span class="icon-cart"></span>
             <span>购物车</span>
           </a>
@@ -33,10 +35,10 @@
                     <div class="pro-img">
                       <img
                         :src="item.mainImage"
-                        :alt="item.name" />
+                        :alt="item.subTitle" />
                     </div>
                     <div class="pro-name">{{item.name}}</div>
-                    <div class="pro-price">{{item.price}}元</div>
+                    <div class="pro-price">{{item.price | currency}}元</div>
                   </a>
                 </li>
               </ul>
@@ -209,10 +211,29 @@
         phoneList: []
       }
     },
+    filters: {
+      currency(val) {
+        if (!val) {
+          return '0.00'
+        } else {
+          return `￥${val.toFixed(2)}`
+        }
+      }
+    },
     mounted() {
       this.getProductList()
     },
     methods: {
+      handleGotoLogin() {
+        this.$router.push({
+          path: '/login'
+        })
+      },
+      handleGotoCart() {
+        this.$router.push({
+          path: '/cart'
+        })
+      },
       getProductList() {
         this.axios.request({
           method: 'get',
@@ -295,8 +316,8 @@
         }
         .header-menu {
           display:inline-block;
+          flex: 1;
           padding-left:209px;
-          width:643px;
           .item-menu {
             display:inline-block;
             line-height:112px;
@@ -322,6 +343,7 @@
               width:1226px;
               height:0;
               opacity:0;
+              overflow: hidden;
               box-shadow:0 7px 6px 0 rgba(0,0,0,.11);
               z-index:10;
               transition:all .5s;
