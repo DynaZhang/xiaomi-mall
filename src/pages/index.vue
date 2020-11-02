@@ -152,7 +152,7 @@
                 <div class="item-info">
                   <h3>{{sub.name}}</h3>
                   <p>{{sub.subtitle}}</p>
-                  <p class="price">{{sub.price}}元</p>
+                  <p class="price" @click="handleAddCart">{{sub.price}}元</p>
                 </div>
               </div>
             </div>
@@ -161,11 +161,17 @@
       </div>
     </div>
     <service-bar />
+    <modal :show="addCartModal" title="提示" confirm-text="查看详情" modal-type="medium" @close="addCartModal = false">
+      <template slot="body">
+        <p>商品添加成功</p>
+      </template>
+    </modal>
   </div>
 </template>
 
 <script>
   import ServiceBar from '../components/ServiceBar'
+  import Modal from '../components/Modal'
   import {swiper,swiperSlide} from 'vue-awesome-swiper'
   import 'swiper/dist/css/swiper.css'
   export default {
@@ -173,7 +179,8 @@
     components: {
       swiper,
       swiperSlide,
-      ServiceBar
+      ServiceBar,
+      Modal
     },
     data () {
       return {
@@ -263,7 +270,8 @@
             img: require('../assets/imgs/ads/ads-4.jpg')
           }
         ],
-        phoneList: []
+        phoneList: [],
+        addCartModal: false
       }
     },
     methods: {
@@ -284,6 +292,9 @@
         }).catch(error => {
           console.log(error)
         })
+      },
+      handleAddCart () {
+        this.addCartModal = true
       }
     },
     mounted () {
@@ -296,180 +307,179 @@
 @import "../assets/styles/base.scss";
 @import "../assets/styles/config.scss";
 @import "../assets/styles/mixin.scss";
-  .index {
-    .swiper-box {
-      position: relative;
-      .nav-menu {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 264px;
-        height: 100%;
-        z-index: 10;
-        padding: 26px 0;
-        background-color: rgba(55,58,90,.5);
-        box-sizing: border-box;
-        .menu-wrap {
-          .menu-item {
-            height: 50px;
-            line-height: 50px;
-            a {
-              position: relative;
-              display: block;
-              padding-left: 30px;
-              font-size: $fontI;
-              color: $colorG;
-              &::after {
-                content: ' ';
-                position: absolute;
-                top: 17.5px;
-                right: 30px;
-                width: 10px;
-                height: 15px;
-                @include bgImg(10px,15px,"../assets/imgs/icon-arrow.png")
-              }
-            }
-            &:hover {
-              background-color: $colorA;
-              .children {
-                display: block;
-              }
-            }
-            .children {
+.index {
+  .swiper-box {
+    position: relative;
+    .nav-menu {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 264px;
+      height: 100%;
+      z-index: 10;
+      padding: 26px 0;
+      background-color: rgba(55,58,90,.5);
+      box-sizing: border-box;
+      .menu-wrap {
+        .menu-item {
+          height: 50px;
+          line-height: 50px;
+          a {
+            position: relative;
+            display: block;
+            padding-left: 30px;
+            font-size: $fontI;
+            color: $colorG;
+            &::after {
+              content: ' ';
               position: absolute;
-              top: 0;
-              left: 264px;
-              display: none;
-              width: 962px;
-              height: 451px;
-              background-color: $colorG;
-              border: 1px solid $colorH;
-              ul {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
+              top: 17.5px;
+              right: 30px;
+              width: 10px;
+              height: 15px;
+              @include bgImg(10px,15px,"../assets/imgs/icon-arrow.png")
+            }
+          }
+          &:hover {
+            background-color: $colorA;
+            .children {
+              display: block;
+            }
+          }
+          .children {
+            position: absolute;
+            top: 0;
+            left: 264px;
+            display: none;
+            width: 962px;
+            height: 451px;
+            background-color: $colorG;
+            border: 1px solid $colorH;
+            ul {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              height: 75px;
+              li {
                 height: 75px;
-                li {
-                  height: 75px;
-                  line-height: 75px;
-                  flex: 1;
-                  padding-left: 23px;
-                }
-                a {
-                  color: $colorB;
-                  font-size: 14px;
-                }
-                img {
-                  width: 42px;
-                  height: 35px;
-                  vertical-align: middle;
-                  margin-right: 15px;
-                }
+                line-height: 75px;
+                flex: 1;
+                padding-left: 23px;
+              }
+              a {
+                color: $colorB;
+                font-size: 14px;
+              }
+              img {
+                width: 42px;
+                height: 35px;
+                vertical-align: middle;
+                margin-right: 15px;
               }
             }
           }
         }
       }
-      .swiper-container {
-        height: 451px;
+    }
+    .swiper-container {
+      height: 451px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      .swiper-button-prev {
+        left: 274px;
+      }
+    }
+  }
+  .ads-box {
+    @include flex();
+    margin-top: 14px; 
+    margin-bottom: 31px;
+    a {
+      width: 296px;
+      height: 167px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .banner {
+    margin-bottom: 50px;
+  }
+  .product-box {
+    background-color: $colorJ;
+    padding: 30px 0 50px;
+    h2 {
+      font-size: $fontF;
+      height: 21px;
+      line-height: 21px;
+      color: $colorB;
+      margin-bottom: 18px;
+    }
+    .wrapper {
+      display: flex;
+      .banner-left {
+        margin-right: 16px;
         img {
+          width: 224px;
+          height: 619px;
+        }
+      }
+      .list-box {
+        flex: 1;
+        .list {
+          @include flex();
           width: 100%;
-          height: 100%;
-        }
-        .swiper-button-prev {
-          left: 274px;
-        }
-      }
-    }
-    .ads-box {
-      @include flex();
-      margin-top: 14px; 
-      margin-bottom: 31px;
-      a {
-        width: 296px;
-        height: 167px;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
-    .banner {
-      margin-bottom: 50px;
-    }
-    .product-box {
-      background-color: $colorJ;
-      padding: 30px 0 50px;
-      h2 {
-        font-size: $fontF;
-        height: 21px;
-        line-height: 21px;
-        color: $colorB;
-        margin-bottom: 18px;
-      }
-      .wrapper {
-        display: flex;
-        .banner-left {
-          margin-right: 16px;
-          img {
-            width: 224px;
-            height: 619px;
+          margin-bottom: 14px;
+          &:last-child {
+            margin-bottom: 0;
           }
-        }
-        .list-box {
-          flex: 1;
-          .list {
-            @include flex();
-            width: 100%;
-            margin-bottom: 14px;
-            &:last-child {
-              margin-bottom: 0;
+          .item {
+            width: 236px;
+            height: 302px;
+            background-color: $colorG;
+            text-align: center;
+            .tag {
+              display: inline-block;
+              width: 67px;
+              height: 24px;
+              color: $colorG;
+              &.new-pro {
+                background-color: #7ECF68;
+              }
+              &.kill-pro {
+                background-color: #E82626;
+              }
             }
-            .item {
-              width: 236px;
-              height: 302px;
-              background-color: $colorG;
-              text-align: center;
-              .tag {
-                display: inline-block;
-                width: 67px;
-                height: 24px;
-                color: $colorG;
-                &.new-pro {
-                  background-color: #7ECF68;
-                }
-                &.kill-pro {
-                  background-color: #E82626;
-                }
+            .item-img {
+              img {
+                width: 100%;
+                height: 195px;
               }
-              .item-img {
-                img {
-                  width: 100%;
-                  height: 195px;
-                }
+            }
+            .item-info {
+              h3 {
+                color: $colorB;
+                font-size: $fontJ;
+                line-height: $fontJ;
+                font-weight: bold;
               }
-              .item-info {
-                h3 {
-                  color: $colorB;
+              p {
+                color: $colorD;
+                line-height: 13px;
+                margin: 6px auto 13px;
+                &.price {
+                  color: #F20A0A;
                   font-size: $fontJ;
-                  line-height: $fontJ;
                   font-weight: bold;
-                }
-                p {
-                  color: $colorD;
-                  line-height: 13px;
-                  margin: 6px auto 13px;
-                  &.price {
-                    color: #F20A0A;
-                    font-size: $fontJ;
-                    font-weight: bold;
-                    cursor: pointer;
-                    &::after {
-                      content: ' ';
-                      vertical-align: middle;
-                      margin-left: 8px;
-                      @include bgImg(22px,22px,'../assets/imgs/icon-cart-hover.png');
-                    }
+                  cursor: pointer;
+                  &::after {
+                    content: ' ';
+                    vertical-align: middle;
+                    margin-left: 8px;
+                    @include bgImg(22px,22px,'../assets/imgs/icon-cart-hover.png');
                   }
                 }
               }
@@ -479,4 +489,5 @@
       }
     }
   }
+}
 </style>
