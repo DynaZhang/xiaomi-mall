@@ -4,7 +4,7 @@
       <div class="mask"></div>
       <div class="modal-dialog">
         <div class="modal-header">
-          <span>标题</span>
+          <span>{{title}}</span>
           <a href="javascript:void(0)" class="icon-close" @click="handleClose"/>
         </div>
         <div class="modal-body">
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     handleConfirm() {
-      this.$emit('close')
+      this.$emit('submit')
     },
     handleCancel() {
       this.$emit('close')

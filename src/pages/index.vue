@@ -10,7 +10,7 @@
                 <ul v-for="(item,index) in menuList" :key="index">
                   <li v-for="(sub,index) in item" :key="index">
                     <a :href="'/product/' + (item.id || 30) ">
-                      <img :src="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
+                      <img v-lazy="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
                       {{sub.name || '小米9'}}
                     </a>
                   </li>
@@ -23,7 +23,7 @@
                 <ul v-for="(item,index) in menuList" :key="index">
                   <li v-for="(sub,index) in item" :key="index">
                     <a :href="'/product/' + (item.id || 30) ">
-                      <img :src="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
+                      <img v-lazy="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
                       {{sub.name || '小米9'}}
                     </a>
                   </li>
@@ -36,7 +36,7 @@
                 <ul v-for="(item,index) in menuList" :key="index">
                   <li v-for="(sub,index) in item" :key="index">
                     <a :href="'/product/' + (item.id || 30) ">
-                      <img :src="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
+                      <img v-lazy="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
                       {{sub.name || '小米9'}}
                     </a>
                   </li>
@@ -49,7 +49,7 @@
                 <ul v-for="(item,index) in menuList" :key="index">
                   <li v-for="(sub,index) in item" :key="index">
                     <a :href="'/product/' + (item.id || 30) ">
-                      <img :src="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
+                      <img v-lazy="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
                       {{sub.name || '小米9'}}
                     </a>
                   </li>
@@ -62,7 +62,7 @@
                 <ul v-for="(item,index) in menuList" :key="index">
                   <li v-for="(sub,index) in item" :key="index">
                     <a :href="'/product/' + (item.id || 30) ">
-                      <img :src="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
+                      <img v-lazy="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
                       {{sub.name || '小米9'}}
                     </a>
                   </li>
@@ -75,7 +75,7 @@
                 <ul v-for="(item,index) in menuList" :key="index">
                   <li v-for="(sub,index) in item" :key="index">
                     <a :href="'/product/' + (item.id || 30) ">
-                      <img :src="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
+                      <img v-lazy="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
                       {{sub.name || '小米9'}}
                     </a>
                   </li>
@@ -88,7 +88,7 @@
                 <ul v-for="(item,index) in menuList" :key="index">
                   <li v-for="(sub,index) in item" :key="index">
                     <a :href="'/product/' + (item.id || 30) ">
-                      <img :src="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
+                      <img v-lazy="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
                       {{sub.name || '小米9'}}
                     </a>
                   </li>
@@ -101,7 +101,7 @@
                 <ul v-for="(item,index) in menuList" :key="index">
                   <li v-for="(sub,index) in item" :key="index">
                     <a :href="'/product/' + (item.id || 30) ">
-                      <img :src="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
+                      <img v-lazy="sub.img || require('../assets/imgs/item-box-3.jpg')" alt="" />
                       {{sub.name || '小米9'}}
                     </a>
                   </li>
@@ -113,7 +113,7 @@
         <swiper ref="indexSwiper" :options="swiperOptions">
           <swiper-slide v-for="(item,index) in slideList" :key="index">
             <a :href="item.id ? '/product/' + item.id : 'javascript:void(0)'">
-              <img :src="item.img ? item.img : require('../assets/imgs/item-box-1.png')" alt="">
+              <img v-lazy="item.img ? item.img : require('../assets/imgs/item-box-1.png')" alt="">
             </a>
           </swiper-slide>
 
@@ -124,7 +124,7 @@
       </div>
       <div class="ads-box">
         <a v-for="item in adsList" :key="item.id" :href="'/product/' + item.id">
-          <img :src="item.img" alt="" />
+          <img v-lazy="item.img" alt="" />
         </a>
       </div>
       <div class="banner">
@@ -147,12 +147,12 @@
               <div class="item" v-for="(sub,j) in item" :key="j">
                 <span class="tag" :class="{'new-pro': j%2===0, 'kill-pro': j%2===1}">新品</span>
                 <div class="item-img">
-                  <img :src="sub.mainImage" alt="">
+                  <img v-lazy="sub.mainImage" alt="">
                 </div>
                 <div class="item-info">
                   <h3>{{sub.name}}</h3>
                   <p>{{sub.subtitle}}</p>
-                  <p class="price" @click="handleAddCart">{{sub.price}}元</p>
+                  <p class="price" @click="handleAddCart(item.id)">{{sub.price}}元</p>
                 </div>
               </div>
             </div>
@@ -161,7 +161,7 @@
       </div>
     </div>
     <service-bar />
-    <modal :show="addCartModal" title="提示" confirm-text="查看详情" modal-type="medium" @close="addCartModal = false">
+    <modal :show="addCartModal" title="提示" confirm-text="查看详情" modal-type="medium" @submit="handleGoToCart" @close="addCartModal = false">
       <template slot="body">
         <p>商品添加成功</p>
       </template>
@@ -293,8 +293,20 @@
           console.log(error)
         })
       },
-      handleAddCart () {
-        this.addCartModal = true
+      handleAddCart (id) {
+        this.axios.request({
+          method: 'post',
+          url: '/carts',
+          data: {productId: id, selected: true}
+        }).then(() => {
+
+        }).catch(() => {
+          this.addCartModal = true
+        })
+       
+      },
+      handleGoToCart() {
+        this.$router.push('/cart')
       }
     },
     mounted () {

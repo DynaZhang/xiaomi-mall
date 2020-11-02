@@ -1,7 +1,9 @@
 import Vue from 'vue'
+import VueAxios from "vue-axios";
+import VueLazyload from 'vue-lazyload';
+
 import router from './router'
 import axios from 'axios';
-import VueAxios from "vue-axios";
 
 import env from './env';
 
@@ -28,6 +30,11 @@ if (mock) {
 }
 
 Vue.use(VueAxios, axios);
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  loading: './assets/imgs/loading-svg/loading-bar.svg',
+  attempt: 1
+});
 Vue.config.productionTip = false
 
 new Vue({

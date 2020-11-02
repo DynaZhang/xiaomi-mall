@@ -34,7 +34,7 @@
                   <a :href="`/product/${item.id}`" target="_blank">
                     <div class="pro-img">
                       <img
-                        :src="item.mainImage"
+                        v-lazy="item.mainImage"
                         :alt="item.subTitle" />
                     </div>
                     <div class="pro-name">{{item.name}}</div>
