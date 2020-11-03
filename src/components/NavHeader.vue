@@ -345,7 +345,7 @@
               opacity:0;
               overflow: hidden;
               box-shadow:0 7px 6px 0 rgba(0,0,0,.11);
-              z-index:10;
+              z-index:11;
               transition:all .5s;
               background-color:#ffffff;
               .product {
