@@ -11,6 +11,7 @@ import OrderConfirm from '../pages/orderConfirm';
 import OrderPay from '../pages/orderPay';
 import Cart from '../pages/cart';
 import Alipay from '../pages/aliPay';
+import Login from '../pages/login.vue';
 
 Vue.use(VueRouter);
 
@@ -71,6 +72,11 @@ const router = new VueRouter({
           component: Alipay
         }
       ]
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     }
   ]
 });
