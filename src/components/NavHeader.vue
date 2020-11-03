@@ -16,6 +16,7 @@
           <a href="javascript:void(0)" class="my-cart" @click="handleGotoCart">
             <span class="icon-cart"></span>
             <span>购物车</span>
+            <span v-if="cartCount > 0">({{cartCount}})</span>
           </a>
         </div>
       </div>
@@ -203,11 +204,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
   export default {
     name: "nav-header",
     data() {
       return {
-        username: 'jack',
         phoneList: []
       }
     },
@@ -218,6 +219,15 @@
         } else {
           return `￥${val.toFixed(2)}`
         }
+      }
+    },
+    computed: {
+      ...mapGetters({
+        'userInfo': 'common/getUserInfo',
+        'cartCount': 'common/getCartCount'
+      }),
+      username() {
+        return this.userInfo.username
       }
     },
     mounted() {

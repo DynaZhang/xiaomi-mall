@@ -1,15 +1,17 @@
 import Vue from 'vue'
-import VueAxios from "vue-axios";
-import VueLazyload from 'vue-lazyload';
+import VueAxios from "vue-axios"
+import VueLazyload from 'vue-lazyload'
+import VueCookies from 'vue-cookies'
 
 import router from './router'
-import axios from 'axios';
+import store from './store'
+import axios from 'axios'
 
-import env from './env';
+import env from './env'
 
-import App from './App.vue';
+import App from './App.vue'
 
-import './assets/styles/reset.scss';
+import './assets/styles/reset.scss'
 
 axios.defaults.baseURL = env.baseURL
 axios.defaults.timeout = 8000
@@ -35,9 +37,11 @@ Vue.use(VueLazyload, {
   loading: './assets/imgs/loading-svg/loading-bar.svg',
   attempt: 1
 });
+Vue.use(VueCookies)
 Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
   router,
+  store
 }).$mount('#app')
