@@ -152,7 +152,7 @@
                 <div class="item-info">
                   <h3>{{sub.name}}</h3>
                   <p>{{sub.subtitle}}</p>
-                  <p class="price" @click="handleAddCart(item.id)">{{sub.price}}元</p>
+                  <p class="price" @click="handleAddCart(sub.id)">{{sub.price}}元</p>
                 </div>
               </div>
             </div>
@@ -172,6 +172,7 @@
 <script>
   import ServiceBar from '../components/ServiceBar'
   import Modal from '../components/Modal'
+  import { Message } from 'element-ui'
   import {swiper,swiperSlide} from 'vue-awesome-swiper'
   import 'swiper/dist/css/swiper.css'
   export default {
@@ -299,9 +300,9 @@
           url: '/carts',
           data: {productId: id, selected: true}
         }).then(() => {
-
-        }).catch(() => {
           this.addCartModal = true
+        }).catch(() => {
+
         })
        
       },

@@ -40,6 +40,7 @@
 </template>
 
 <script>
+  import { Message } from 'element-ui'
   import {mapMutations} from 'vuex'
   export default {
     name: "login",
@@ -62,8 +63,9 @@
         }).then((response)=>{
           this.$cookies.set('userId',response.id,{expires:'1M'});
           this.setUserInfo(response)
-          // to-do 保存用户名
           this.$router.push('/index');
+        }).catch(error => {
+          console.log(error)
         })
       },
       register(){
@@ -71,9 +73,12 @@
         this.axios.post('/user/register',{
           username,
           password,
-          email:'13339687922@163.com'
+          email:'1234567890@163.com'
         }).then(()=>{
-          alert('注册成功');
+          Message({
+            type: 'success',
+            message: '注册成功'
+          })
         })
       }
     }

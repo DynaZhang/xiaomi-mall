@@ -5,18 +5,36 @@
         <a href="/index" />
       </div>
       <div class="title">
-        <h2>我的购物车<span>温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</span></h2>
+        <h2>
+          我的购物车
+          <slot name="tip"></slot>
+        </h2>
       </div>
       <div class="username">
-        <a href="javascript:void(0)">河畔一角</a>
+        <a href="javascript:void(0)">{{username}}</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
   export default {
-    name: "order-header"
+    name: "order-header",
+    props: {
+      title: {
+        type: String,
+        default: ''
+      }
+    },
+    computed: {
+      ...mapGetters({
+        'userInfo': 'common/getUserInfo'
+      }),
+      username() {
+        return this.userInfo.username
+      }
+    }
   }
 </script>
 
