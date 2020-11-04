@@ -11,6 +11,7 @@
         <div class="topbar-user">
           <a href="javascript:void(0)" v-if="username">{{username}}</a>
           <a href="javascript:void(0)" v-if="username">我的订单</a>
+          <a href="javascript:void(0)" v-if="username" @click="handleLogout">退出</a>
           <a href="javascript:void(0)" v-if="!username" @click="handleGotoLogin">登录</a>
           <a href="javascript:void(0)" v-if="!username">注册</a>
           <a href="javascript:void(0)" class="my-cart" @click="handleGotoCart">
@@ -204,7 +205,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
   export default {
     name: "nav-header",
     data() {
@@ -234,9 +235,25 @@ import { mapGetters } from 'vuex'
       this.getProductList()
     },
     methods: {
+      ...mapMutations({
+        'setUserInfo': 'common/setUserInfo',
+        'setCartCount': 'common/setCartCount'
+      }),
       handleGotoLogin() {
         this.$router.push({
           path: '/login'
+        })
+      },
+      handleLogout() {
+        this.axios.request({
+          method: 'post',
+          url: '/user/logout'
+        }).then(() => {
+          this.setUserInfo({})
+          this.setCartCount(0)
+          this.$cookies.remove('userId')
+        }).catch(error => {
+          console.log(error)
         })
       },
       handleGotoCart() {
